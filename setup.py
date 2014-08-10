@@ -26,4 +26,4 @@ setup(
     description="Python scripts to find enrichment of GO terms",
     long_description=open("README.rst").read(),
     install_requires=['fisher', 'pygraphviz']
-    )
+)
