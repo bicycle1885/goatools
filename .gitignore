@@ -1,0 +1,12 @@
+# cache files / directories
+*.py[cod]
+__pycache__/
+
+# virtualenv / venv
+/*.egg-info
+/.Python
+/bin
+/include
+/lib
+/man
+/share
