@@ -6,10 +6,12 @@ from goatools.obo_parser import (
     GODag
 )
 
+mini_obo = os.path.join(os.path.dirname(__file__), "data/mini_obo.obo")
+
 
 class TestOBOReader(unittest.TestCase):
     def test_iteration(self):
-        reader = OBOReader(os.path.join(os.path.dirname(__file__), "data/mini_obo.obo"))
+        reader = OBOReader(mini_obo)
         n = 0
 
         for i, term in enumerate(reader, start=1):
@@ -27,4 +29,21 @@ class TestGOTerm(unittest.TestCase):
 
 
 class TestGODag(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.dag = GODag(mini_obo)
+
+    def test_query_term(self):
+        term = self.dag.query_term("GO:0000006")
+        self.assertEqual(term.id, "GO:0000006")
+
+        term = self.dag.query_term("GO:1234567")
+        self.assertIsNone(term)
+
+    def test_paths_to_top(self):
+        paths = self.dag.paths_to_top("GO:0000006")
+        self.assertEqual(
+            str(paths),
+            "[[GOTerm('GO:0000001'), "
+            "GOTerm('GO:0000003'), "
+            "GOTerm('GO:0000006')]]"
+        )
